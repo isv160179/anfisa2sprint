@@ -43,6 +43,8 @@ class Wrapper(PublishedModel):
 class IceCream(PublishedModel):
     title = models.CharField('Название', max_length=256)
     description = models.TextField('Описание')
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    output_order = models.PositiveSmallIntegerField('Порядок отображения', default=100)
     wrapper = models.OneToOneField(
         Wrapper,
         on_delete=models.SET_NULL,
@@ -63,6 +65,10 @@ class IceCream(PublishedModel):
     class Meta:
         verbose_name = 'мороженое'
         verbose_name_plural = 'Мороженое'
+        # Сначала сортируем по полю output_order,
+        # а если у нескольких объектов значения output_order совпадают--
+        # сортируем по title.
+        ordering = ('output_order', 'title')
 
     def __str__(self):
         return self.title
