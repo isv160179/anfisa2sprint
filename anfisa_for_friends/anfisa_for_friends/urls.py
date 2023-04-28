@@ -7,6 +7,7 @@ urlpatterns = [
     path('about/', include('about.urls')),
     path('ice_cream/', include('ice_cream.urls')),
     path('admin/', admin.site.urls),
+    path('contest/', include('contest.urls')),
 ]
 
 # Если проект запущен в режиме разработки...
