@@ -1,18 +1,11 @@
 from django.shortcuts import render
 
+from contest.forms import ContestForm
 
-from .forms import ContestForm
 
-
-def proposal_create(request):
-    form = ContestForm()
+def proposal(request):
+    form = ContestForm(request.POST or None)
     context = {'form': form}
-    return render(
-        request,
-        'contest/form.html',
-        context=context,
-    )
-
-
-def accepted(request):
-    return render(request, 'contest/proposal_accepted.html')
+    if form.is_valid():
+        form.save()
+    return render(request, 'contest/form.html', context)
