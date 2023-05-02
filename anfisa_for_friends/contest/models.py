@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.urls import reverse
 
 
 class Contest(models.Model):
@@ -14,3 +15,8 @@ class Contest(models.Model):
         help_text='Рекомендованная розничная цена',
     )
     comment = models.TextField('Комментарий', blank=True)
+    image = models.ImageField('Фото', blank=True, upload_to='proposal_images')
+
+    def get_absolute_url(self):
+        # С помощью функции reverse() возвращаем URL объекта.
+        return reverse('contest:detail', kwargs={'pk': self.pk})

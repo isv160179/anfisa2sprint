@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  ID записи: {{ object.id }}
+  <hr>
+  {% if contest.image %}
+    <div>
+      <!-- Картинку сделаем побольше, чем на странице list/: высотой 200px -->
+      <img src="{{ contest.image.url }}" height="200">
+    </div>
+  {% endif %}
+   <h2>{{ contest.title }} {{ contest.price }}</h2>
+{% endblock content %}

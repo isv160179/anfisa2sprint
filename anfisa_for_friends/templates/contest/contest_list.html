@@ -4,15 +4,27 @@
     Список заявок
 {% endblock %}
 {% block content %}
-    {% for contest in contests %}
-        <div>
-            {{ contest.id }}, {{ contest.title }}, {{ contest.price }}, {{ contest.description }}, {{ contest.comment }}
-        <br>
-            <a href="{% url 'contest:edit' contest.id %}">Редактировать заявку</a>
-            <a href="{% url 'contest:delete' contest.id %}">Удалить заявку</a>
+    {% for proposal in page_obj %}
+        <div class="row">
+            <div class="col-2">
+                {% if proposal.image %}
+                    <!-- У объекта картинки image есть атрибт url — его и укажем в src -->
+                    <img src="{{ proposal.image.url }}" height="100">
+                {% endif %}
+            </div>
+            <div class="col-10">
+                <div>
+                    {{ proposal.id }}, {{ proposal.title }}, {{ proposal.price }}, {{ proposal.description }}, {{ proposal.comment }}
+                    <br>
+                    <a href="{% url 'contest:detail' proposal.id %}">Подробнее</a>
+                    <a href="{% url 'contest:edit' proposal.id %}">Редактировать заявку</a>
+                    <a href="{% url 'contest:delete' proposal.id %}">Удалить заявку</a>
+                </div>
+            </div>
+            {% if not forloop.last %}
+                <hr class="mt-3">
+            {% endif %}
         </div>
-        {% if not forloop.last %}
-            <hr>
-        {% endif %}
     {% endfor %}
+    {% include "contest/includes/paginator.html" %}
 {% endblock %}
